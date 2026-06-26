@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O Olimpo de Otávio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div id="particles"></div>
+
+<!-- ══ MODAL GLOBAL ══ -->
+<div id="info-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="modal-close" id="modal-close-btn" aria-label="Fechar">✕</button>
+    <div class="modal-img-wrap">
+      <img id="modal-img" src="" alt="" loading="lazy">
+      <div class="modal-img-overlay"></div>
+      <div class="modal-img-badge" id="modal-badge"></div>
+    </div>
+    <div class="modal-body">
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p  class="modal-desc"  id="modal-desc"></p>
+      <div class="modal-tags" id="modal-tags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VÉUS DE TRANSIÇÃO ══ -->
+<div id="page-veil">
+  <div id="veil-bg"></div>
+  <div id="veil-content">
+    <div id="veil-symbol">⚡</div>
+    <div id="veil-label">Navegando pelo Olimpo…</div>
+  </div>
+</div>
+
+<div class="app-container">
+
+  <!-- Header -->
+  <header class="temple-header">
+    <div class="header-lightning left">⚡</div>
+    <div class="header-center">
+      <div class="site-title">✦ Bem-vindo ao Olimpo ✦</div>
+      <div class="site-subtitle">Oráculo Celestial · Pizza Sagrada · Mitologia Grega</div>
+    </div>
+    <div class="header-lightning right">⚡</div>
+  </header>
+  <div class="greek-meander"></div>
+
+  <!-- Zodiac Ring — cada símbolo abre um modal -->
+  <div class="zodiac-ring">
+    <span data-modal="aries"      title="Áries">♈</span>
+    <span data-modal="taurus"     title="Touro">♉</span>
+    <span data-modal="gemini"     title="Gêmeos">♊</span>
+    <span data-modal="cancer"     title="Câncer">♋</span>
+    <span data-modal="leo"        title="Leão">♌</span>
+    <span data-modal="virgo"      title="Virgem">♍</span>
+    <span data-modal="libra"      title="Libra">♎</span>
+    <span data-modal="scorpio"    title="Escorpião">♏</span>
+    <span data-modal="sagittarius" title="Sagitário">♐</span>
+    <span data-modal="capricorn"  title="Capricórnio">♑</span>
+    <span data-modal="aquarius"   title="Aquário">♒</span>
+    <span data-modal="pisces"     title="Peixes">♓</span>
+  </div>
+
+  <!-- ══ PÁGINA 1 — ORÁCULO ══ -->
+  <section id="page-1" class="page active">
+    <div class="step-indicator">
+      <div class="step-dot active"></div><div class="step-dot"></div>
+      <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="page-badge glow-gold clickable" data-modal="badge-oracle">🔮</div>
+    <h2 class="greek-title"><span class="lightning">⚡</span> Decifre o Oráculo <span class="lightning">⚡</span></h2>
+    <p class="subtitle">As Moiras teceram letras do destino nas estrelas. Ordene-as para revelar o nome do semideus escolhido pelos deuses.</p>
+    <div class="oracle-box">
+      <div class="oracle-label">☽ As runas do destino ☽</div>
+      <div id="word-slots" class="slots-container"></div>
+      <div class="oracle-label" style="margin-top:14px;"><span class="lightning">⚡</span> Letras Místicas <span class="lightning">⚡</span></div>
+      <div id="letters-pool" class="letters-container"></div>
+    </div>
+    <div id="hint-box" class="hint-box hidden">
+      <div class="hint-icon">💡</div>
+      <div id="hint-text" class="hint-text"></div>
+    </div>
+    <button id="btn-next-1" class="btn-next" disabled><span class="lightning">⚡</span> Avançar ao Próximo Templo →</button>
+  </section>
+
+  <!-- ══ PÁGINA 2 — MURAL ══ -->
+  <section id="page-2" class="page">
+    <div class="step-indicator">
+      <div class="step-dot done"></div><div class="step-dot active"></div>
+      <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="page-badge glow-blue clickable" data-modal="badge-mural">🏛️</div>
+    <h2 class="greek-title">Mural do Herói</h2>
+    <p class="subtitle">A inscrição eterna deste semideus nos pilares dourados do Olimpo.</p>
+
+    <div class="hero-card">
+      <div class="hero-card-header">
+        <div class="hero-sign-big glow-gold clickable" data-modal="leo">♌</div>
+        <div class="hero-id-info">
+          <h3 class="hero-name">Otávio Stelle <span class="lightning">⚡</span></h3>
+          <div class="hero-subtitle-tag">Semideus · Filho de Poseidon · Leão</div>
+          <div class="hero-chips">
+            <span class="chip gold clickable" data-modal="leo">♌ Leão</span>
+            <span class="chip blue clickable" data-modal="stat-city">📍 São Paulo</span>
+            <span class="chip electric">🎂 08/08/2008</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-divider">✦ Atributos do Semideus ✦</div>
+      <div class="hero-stats-grid">
+        <div class="hero-stat clickable" data-modal="leo">
+          <div class="stat-icon">🔭</div>
+          <div class="stat-label">Signo</div>
+          <div class="stat-value">Leão ♌</div>
+          <div class="stat-desc">Corajoso, criativo, determinado</div>
+        </div>
+        <div class="hero-stat clickable" data-modal="stat-city">
+          <div class="stat-icon">🏙️</div>
+          <div class="stat-label">Origem</div>
+          <div class="stat-value">São Paulo</div>
+          <div class="stat-desc">A metrópole de pedra e aço</div>
+        </div>
+        <div class="hero-stat clickable" data-modal="stat-destiny">
+          <div class="stat-icon">⚙️</div>
+          <div class="stat-label">Destino</div>
+          <div class="stat-value">Eng. Mecatrônico</div>
+          <div class="stat-desc">Construtor de futuros</div>
+        </div>
+        <div class="hero-stat clickable" data-modal="stat-gift">
+          <div class="stat-icon">📐</div>
+          <div class="stat-label">Dom Divino</div>
+          <div class="stat-value">Ciências Exatas</div>
+          <div class="stat-desc">A língua dos deuses</div>
+        </div>
+      </div>
+
+      <div class="hero-divider">✦ <span class="lightning">⚡</span> Habilidades em Aprendizado ✦</div>
+      <div class="skills-list">
+        <div class="skill-item clickable" data-modal="skill-cooking">
+          <span class="skill-icon">🍳</span>
+          <div><strong>Culinária</strong><small>Dominar as receitas dignas do banquete olímpico</small></div>
+        </div>
+        <div class="skill-item clickable" data-modal="skill-drawing">
+          <span class="skill-icon">✏️</span>
+          <div><strong>Desenho</strong><small>Registrar visões e mundos em traços e formas</small></div>
+        </div>
+        <div class="skill-item clickable" data-modal="skill-piano">
+          <span class="skill-icon">🎹</span>
+          <div><strong>Piano</strong><small>Fazer as teclas cantarem melodias apollinares</small></div>
+        </div>
+        <div class="skill-item clickable" data-modal="skill-pizza">
+          <span class="skill-icon">🍕</span>
+          <div><strong>Pizza</strong><small>Constelação consagrada no céu gastronômico</small></div>
+        </div>
+      </div>
+
+      <div class="hero-divider">✦ Esculpa sua Lenda ✦</div>
+      <p contenteditable="true" class="editable-desc" id="desc-text">Nascido sob o sol ardente de agosto, em São Paulo, Otávio Stelle é um semideus guiado pelas estrelas e pela lógica. Com paixão por exatas e destino marcado pela Engenharia Mecatrônica, seu caminho é construído com equações e determinação. Clique para editar…</p>
+      <div id="char-counter">Clique no texto para personalizar sua lenda</div>
+    </div>
+
+    <button id="btn-next-2" class="btn-next"><span class="lightning">⚡</span> Viajar pelo Conhecimento →</button>
+  </section>
+
+  <!-- ══ PÁGINA 3 — CIÊNCIAS ══ -->
+  <section id="page-3" class="page">
+    <div class="step-indicator">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="page-badge glow-gold clickable" data-modal="badge-science">⚙️</div>
+    <h2 class="greek-title"><span class="lightning">⚡</span> Matemática &amp; Engenharia</h2>
+    <p class="subtitle">A linguagem universal dos deuses — e a base de quem constrói o futuro.</p>
+
+    <div class="math-grid">
+      <div class="math-card">
+        <div class="card-icon clickable" data-modal="math-geometry">📐</div>
+        <h3>Geometria Sagrada</h3>
+        <p>Das proporções áureas do Partenon à seção áurea φ = 1,618… A matemática governa tudo, do cosmos às estruturas humanas.</p>
+      </div>
+      <div class="math-card featured-card">
+        <div class="card-icon glow-gold clickable" data-modal="math-binomial">🔢</div>
+        <h3><span class="lightning">⚡</span> Binômio de Newton</h3>
+        <p>A ferramenta que expande potências de binômios. Desenvolvida por Newton no séc. XVII, é base da álgebra moderna.</p>
+      </div>
+      <div class="math-card">
+        <div class="card-icon clickable" data-modal="math-calculus">∫</div>
+        <h3>Cálculo &amp; Análise</h3>
+        <p>Derivadas, integrais e limites: ferramentas que descrevem o movimento, a variação e a perfeição do universo físico.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="eng-section">
+      <div class="eng-title"><span class="lightning">⚡</span> O que faz um Engenheiro Mecatrônico? <span class="lightning">⚡</span></div>
+      <div class="eng-grid">
+        <div class="eng-card clickable" data-modal="eng-robotics"><span class="eng-icon">🤖</span><strong>Robótica</strong><p>Projeta e programa robôs industriais e autônomos.</p></div>
+        <div class="eng-card clickable" data-modal="eng-automation"><span class="eng-icon">🏭</span><strong>Automação</strong><p>Cria sistemas automatizados para fábricas inteligentes.</p></div>
+        <div class="eng-card clickable" data-modal="eng-embedded"><span class="eng-icon">🛰️</span><strong>Sistemas Embarcados</strong><p>Desenvolve drones, veículos autônomos e equipamentos médicos.</p></div>
+        <div class="eng-card clickable" data-modal="eng-research"><span class="eng-icon">🔬</span><strong>P&amp;D &amp; Inovação</strong><p>Trabalha na fronteira da IA e da mecânica de precisão.</p></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="quiz-box">
+      <div class="quiz-title"><span class="lightning">⚡</span> Enigma do Oráculo de Delfos <span class="lightning">⚡</span></div>
+      <p class="quiz-question">Qual das alternativas representa corretamente a fórmula do Binômio de Newton?</p>
+      <div id="quiz-container" class="quiz-container"></div>
+      <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+    </div>
+
+    <button id="btn-next-3" class="btn-next" disabled><span class="lightning">⚡</span> Entrar no Acampamento Meio-Sangue →</button>
+  </section>
+
+  <!-- ══ PÁGINA 4 — PERCY JACKSON ══ -->
+  <section id="page-4" class="page">
+    <div class="step-indicator">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
+    </div>
+    <div class="page-badge glow-blue clickable" data-modal="badge-saga">📚</div>
+    <h2 class="greek-title"><span class="lightning">⚡</span> A Saga de Percy Jackson</h2>
+    <p class="subtitle">Cinco livros. Cinco missões. Um herói escolhido pelo destino.</p>
+
+    <div class="books-grid">
+      <div class="book-card clickable" data-modal="book-1">
+        <div class="book-num">I</div>
+        <div class="book-icon">⚡</div>
+        <h3>O Ladrão de Raios</h3>
+        <p>Percy descobre ser filho de Poseidon e é acusado de roubar o raio mestre de Zeus. Uma corrida para evitar a guerra dos deuses.</p>
+      </div>
+      <div class="book-card clickable" data-modal="book-2">
+        <div class="book-num">II</div>
+        <div class="book-icon">🌊</div>
+        <h3>O Mar de Monstros</h3>
+        <p>O Acampamento está morrendo. Percy navega ao Mar de Monstros para buscar o Velocino de Ouro.</p>
+      </div>
+      <div class="book-card clickable" data-modal="book-3">
+        <div class="book-num">III</div>
+        <div class="book-icon">🌙</div>
+        <h3>A Maldição do Titã</h3>
+        <p>Ártemis é capturada. Percy embarca numa jornada ao oeste enfrentando uma profecia que ameaça o Olimpo.</p>
+      </div>
+      <div class="book-card clickable" data-modal="book-4">
+        <div class="book-num">IV</div>
+        <div class="book-icon">🌀</div>
+        <h3>A Batalha do Labirinto</h3>
+        <p>Cronos tenta usar o Labirinto de Dédalo para atacar o Acampamento. Um confronto épico e mortal.</p>
+      </div>
+      <div class="book-card book-final clickable" data-modal="book-5">
+        <div class="book-num">V</div>
+        <div class="book-icon"><span class="lightning">⚡</span></div>
+        <h3>O Último Olimpiano</h3>
+        <p>A grande guerra final. Cronos marcha sobre Nova York. A grande profecia enfim se cumpre.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="section-label"><span class="lightning">⚡</span> Os Doze Olímpicos <span class="lightning">⚡</span></p>
+    <div class="gods-olympus-grid">
+      <div class="olympus-card clickable" data-modal="god-zeus">      <span>⚡</span><strong>Zeus</strong><small>Céu e Trovão</small></div>
+      <div class="olympus-card clickable" data-modal="god-poseidon">  <span>🔱</span><strong>Poseidon</strong><small>Mar e Terremotos</small></div>
+      <div class="olympus-card clickable" data-modal="god-hades">     <span>💀</span><strong>Hades</strong><small>Submundo</small></div>
+      <div class="olympus-card clickable" data-modal="god-demeter">   <span>🌾</span><strong>Deméter</strong><small>Colheita e Terra</small></div>
+      <div class="olympus-card clickable" data-modal="god-athena">    <span>🦉</span><strong>Atena</strong><small>Sabedoria e Guerra</small></div>
+      <div class="olympus-card clickable" data-modal="god-apollo">    <span>☀️</span><strong>Apolo</strong><small>Sol e Música</small></div>
+      <div class="olympus-card clickable" data-modal="god-artemis">   <span>🌙</span><strong>Ártemis</strong><small>Lua e Caça</small></div>
+      <div class="olympus-card clickable" data-modal="god-ares">      <span>⚔️</span><strong>Ares</strong><small>Guerra</small></div>
+      <div class="olympus-card clickable" data-modal="god-hephaestus"><span>🔨</span><strong>Hefesto</strong><small>Fogo e Forja</small></div>
+      <div class="olympus-card clickable" data-modal="god-aphrodite"> <span>❤️</span><strong>Afrodite</strong><small>Amor e Beleza</small></div>
+      <div class="olympus-card clickable" data-modal="god-hermes">    <span>🪽</span><strong>Hermes</strong><small>Mensageiro</small></div>
+      <div class="olympus-card clickable" data-modal="god-dionysus">  <span>🍇</span><strong>Dionísio</strong><small>Vinho e Êxtase</small></div>
+    </div>
+
+    <blockquote class="pj-quote">
+      "Os deuses existem porque as pessoas acreditam neles. E as pessoas acreditam neles porque os deuses existem."
+      <span>– Rick Riordan</span>
+    </blockquote>
+
+    <button id="btn-next-4" class="btn-next"><span class="lightning">⚡</span> Entrar na Arena dos Deuses ⚔️</button>
+  </section>
+
+  <!-- ══ PÁGINA 5 — ARENA ══ -->
+  <section id="page-5" class="page">
+    <div class="step-indicator">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div>
+    </div>
+    <div class="page-badge glow-gold clickable" data-modal="badge-arena">⚔️</div>
+    <h2 class="greek-title"><span class="lightning">⚡</span> Arena dos Deuses <span class="lightning">⚡</span></h2>
+    <p class="subtitle">Três Olímpicos bloqueiam seu caminho. Derrote-os para provar seu valor!</p>
+
+    <!-- Progresso -->
+    <div class="god-progress-row">
+      <div class="prog-item clickable" id="prog-0" data-modal="god-ares"><span class="prog-icon">⚔️</span><span class="prog-name">Ares</span></div>
+      <div class="prog-arrow">→</div>
+      <div class="prog-item clickable" id="prog-1" data-modal="god-hermes"><span class="prog-icon">🪽</span><span class="prog-name">Hermes</span></div>
+      <div class="prog-arrow">→</div>
+      <div class="prog-item clickable" id="prog-2" data-modal="god-zeus"><span class="prog-icon">⚡</span><span class="prog-name">Zeus</span></div>
+    </div>
+
+    <div id="game-arena">
+
+      <!-- ── PALCO DOS PERSONAGENS ── -->
+      <div class="char-stage" id="char-stage">
+
+        <!-- INIMIGO — RETRATO DO DEUS -->
+        <div class="char-portrait enemy-portrait idle" id="enemy-portrait">
+          <div class="portrait-backdrop" id="enemy-backdrop"></div>
+          <div class="portrait-fx-layer" id="enemy-fx"></div>
+          <div class="portrait-emojis">
+            <span class="p-crown"  id="p-enemy-crown">🪖</span>
+            <span class="p-face"   id="p-enemy-face">😡</span>
+            <span class="p-weapon" id="p-enemy-weapon">⚔️</span>
+          </div>
+          <div class="portrait-nameplate" id="enemy-plate">Ares</div>
+          <div class="portrait-title-plate" id="enemy-title">Deus da Guerra</div>
+          <div class="portrait-floor-glow"></div>
+        </div>
+
+        <!-- VS -->
+        <div class="char-vs-wrap">
+          <div class="char-vs-flash">⚡</div>
+          <div class="char-vs-text">VS</div>
+        </div>
+
+        <!-- HERÓI — RETRATO DO SEMIDEUS -->
+        <div class="char-portrait hero-portrait idle" id="hero-portrait">
+          <div class="portrait-backdrop hero-backdrop"></div>
+          <div class="portrait-fx-layer" id="hero-fx"></div>
+          <div class="portrait-emojis">
+            <span class="p-crown">🔱</span>
+            <span class="p-face" id="p-hero-face">🗡️</span>
+            <span class="p-weapon">🌊</span>
+          </div>
+          <div class="portrait-nameplate">Otávio</div>
+          <div class="portrait-title-plate">Semideus de Poseidon</div>
+          <div class="portrait-floor-glow hero-floor-glow"></div>
+        </div>
+
+      </div><!-- /char-stage -->
+
+      <!-- HP Bars -->
+      <div class="hp-bars-row">
+        <div class="hp-block">
+          <div class="hp-block-name" id="god-name">Ares</div>
+          <div class="hp-track"><div id="god-hp-bar" class="hp-fill god-fill" style="width:100%"></div></div>
+          <div class="hp-block-val" id="god-hp-text">65 / 65</div>
+        </div>
+        <div class="hp-separator">⚡</div>
+        <div class="hp-block">
+          <div class="hp-block-name">Otávio</div>
+          <div class="hp-track"><div id="player-hp-bar" class="hp-fill player-fill" style="width:100%"></div></div>
+          <div class="hp-block-val" id="player-hp-text">100 / 100</div>
+        </div>
+      </div>
+
+      <!-- Magic pips -->
+      <div class="magic-row">
+        <span class="magic-label">✨ Magias:</span>
+        <span class="magic-pip active" id="magic-pip-0">★</span>
+        <span class="magic-pip active" id="magic-pip-1">★</span>
+        <span class="magic-pip active" id="magic-pip-2">★</span>
+      </div>
+
+      <!-- Battle log -->
+      <div id="battle-log">
+        <div class="log-entry intro-log">⚔️ A batalha começa! Enfrente Ares, Deus da Guerra!</div>
+      </div>
+
+      <!-- Ações -->
+      <div id="action-btns">
+        <button class="action-btn attack-btn" id="btn-attack"><span class="btn-action-icon">⚔️</span><span>Atacar</span></button>
+        <button class="action-btn magic-btn"  id="btn-magic"> <span class="btn-action-icon">✨</span><span>Magia</span></button>
+        <button class="action-btn defend-btn" id="btn-defend"><span class="btn-action-icon">🛡️</span><span>Defender</span></button>
+      </div>
+
+      <!-- Game over -->
+      <div id="game-over-screen" style="display:none">
+        <div id="result-icon">🏆</div>
+        <div id="result-title">Vitória!</div>
+        <div id="result-msg"></div>
+        <div class="result-actions">
+          <button id="btn-retry" class="action-btn attack-btn">↺ Tentar Novamente</button>
+        </div>
+      </div>
+
+    </div><!-- /game-arena -->
+
+    <div id="dmg-floats"></div>
+
+    <button id="btn-home" class="btn-next btn-home-style">🏛️ Voltar ao Início</button>
+  </section>
+
+  <div class="greek-meander" style="margin-top:40px;"></div>
+  <div class="temple-footer">✦ O Olimpo de Otávio Stelle · Sub Astra · 🍕 ✦</div>
+
+</div><!-- /app-container -->
+
+<script src="script.js"></script>
+</body>
+</html>
